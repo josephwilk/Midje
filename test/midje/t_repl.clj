@@ -45,7 +45,7 @@
     (fact "Can load namespace by symbol"
       (forget-facts :all)
       (load-facts 'midje.t-repl-helper :print-no-summary)
-      (count (fetch-facts)) => 2)
+      (count (fetch-facts)) => 3)
 
     (fact "Can load namespace by its object"
       (forget-facts :all)
