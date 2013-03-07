@@ -49,7 +49,7 @@
 
     (fact "Can load namespace by its file"
       (forget-facts :all)
-      (load-facts "src/midje/t_repl-helper.clj" :print-no-summary)
+      (load-facts "test/midje/t_repl_helper.clj" :print-no-summary)
       (count (fetch-facts)) => 2)
 
     (fact "Can load namespace by its object"

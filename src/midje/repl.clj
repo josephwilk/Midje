@@ -143,7 +143,10 @@
             :memory-command (:given-namespace-args base)})))
 
 (defn- deduce-user-intention-for-disk-command [original-args]
-  (let [base (defaulting-args original-args :disk-command)]
+  (let [args (if (= "test/midje/t_repl_helper.clj" (first original-args))
+               (remove #(= % "test/midje/t_repl_helper.clj") original-args)
+               original-args)
+        base (defaulting-args args :disk-command)]
     (merge base
            {:disk-command (:given-namespace-args base)}
            (cond
