@@ -10,14 +10,11 @@
             [midje.emission.plugins.default-failure-lines :as lines]
             [clojure.string :as str]))
 
-(def failure-messages (atom []))
-
 (defn pass []
   (print (color/pass "."))
   (flush))
 
 (defn fail [failure-map]
-  (swap! failure-messages conj (lines/summarize failure-map))
   (print (color/fail "F"))
   (flush))
   
@@ -25,9 +22,16 @@
   (print (color/note "P"))
   (flush))
 
+(defn starting-fact-stream []
+  (let [failures (state/raw-fact-failures)]
+    (when-not (empty? failures)
+      (println)
+      (println)
+      (doseq [failure-map failures] (util/emit-lines (lines/summarize failure-map)))
+      (flush))))
+
 (defn finishing-fact-stream [midje-counters clojure-test-map]
   (println)
-  (doseq [line @failure-messages] (util/emit-one-line line))
   (default/finishing-fact-stream midje-counters clojure-test-map))
 
 (defn make-map [& keys]
@@ -38,6 +42,7 @@
                          (make-map :fail
                                    :pass
                                    :future-fact
+                                   :starting-fact-stream
                                    :finishing-fact-stream)))
 
 (state/install-emission-map emission-map)
