@@ -27,7 +27,7 @@
 
 (defn finishing-fact-stream [midje-counters clojure-test-map]
   (println)
-  (doseq [line @failure-messages] (emit-one-line line))
+  (doseq [line @failure-messages] (util/emit-one-line line))
   (default/finishing-fact-stream midje-counters clojure-test-map))
 
 (defn make-map [& keys]
