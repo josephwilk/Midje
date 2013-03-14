@@ -77,6 +77,9 @@
   MoreAddable
   (add-fields-and [this x]
                   (+ (add-fields this) x)))
+  Object
+  (toString
+   [this]))
 
 (fact
   (let [rec (LongerRecord. 1 2 3)]
