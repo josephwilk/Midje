@@ -54,7 +54,7 @@
 
 (defprotocol Addable
   (add-fields [this]))
-    
+
 (defrecord-openly MyRecord [a b]
   Addable
   (add-fields [this] (+ a b)))
@@ -67,7 +67,7 @@
   (indirect-adder 1 2) => :faked!
   (provided
     (add-fields anything) => :faked!))
-    
+
 (defprotocol MoreAddable
   (add-fields-and [this x]))
 
@@ -76,10 +76,9 @@
   (add-fields [this] (+ a b c))
   MoreAddable
   (add-fields-and [this x]
-                  (+ (add-fields this) x)))
+                  (+ (add-fields this) x))
   Object
-  (toString
-   [this]))
+  (.toString [this]))
 
 (fact
   (let [rec (LongerRecord. 1 2 3)]
@@ -118,7 +117,7 @@
   (provided
     (pzero? (Peano. ...zero...)) => true))
 
-(silent-fact 
+(silent-fact
  (padd (Peano. ...a...) (psuccessor (Peano. ...b...))) => (psuccessor (padd (Peano. ...a...) (Peano. ...b...)))
  (provided
    (pzero? anything) => true))
